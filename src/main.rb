@@ -2,7 +2,7 @@ require_relative 'player'
 
 class Game < GameWindow
   def initialize
-    super 800, 600, false
+    super Global::SCREEN_WIDTH, Global::SCREEN_HEIGHT, false
 
     Res.prefix = File.expand_path(__FILE__).split('/')[0..-3].join('/') + '/data'
     G.gravity = Vector.new(0, 0)
