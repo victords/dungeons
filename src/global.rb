@@ -8,11 +8,12 @@ class Global
   TILE_SIZE = 32
 
   class << self
-    attr_reader :window, :stage
+    attr_reader :window, :stage, :player
 
-    def initialize(window, stage)
+    def initialize(window, stage, player)
       @window = window
       @stage = stage
+      @player = player
     end
   end
 end

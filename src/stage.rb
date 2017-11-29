@@ -1,26 +1,34 @@
 require_relative 'global'
 
 class Stage
-  attr_reader :width, :height, :obstacles
+  attr_reader :width, :height, :obstacles, :map
 
   def initialize(number)
+    @wall = Res.img :wall
+    @floor = Res.img :floor
+
     File.open("#{Res.prefix}/stage/#{number}") do |file|
       lines = file.readlines.map { |line| line.strip }
 
       @width = lines[0].length
       @height = lines.length
       @tiles = Array.new(@width) { Array.new(@height) }
-      @obstacles = []
+      @obstacles = [
+        Block.new(0, -1, @width * Global::TILE_SIZE, 1, false),
+        Block.new(0, @height * Global::TILE_SIZE, @width * Global::TILE_SIZE, 1, false),
+        Block.new(-1, 0, 1, @height * Global::TILE_SIZE, false),
+        Block.new(@width * Global::TILE_SIZE, 0, 1, @height * Global::TILE_SIZE, false)
+      ]
 
       lines.each_with_index do |line, y|
         (0...line.length).each do |x|
           if line[x] == '#'
-            @tiles[x][y] = GameObject.new(x * Global::TILE_SIZE,
-                                          y * Global::TILE_SIZE,
-                                          Global::TILE_SIZE,
-                                          Global::TILE_SIZE,
-                                          :wall)
-            @obstacles << @tiles[x][y]
+            @tiles[x][y] = true
+            @obstacles << Block.new(x * Global::TILE_SIZE,
+                                    y * Global::TILE_SIZE,
+                                    Global::TILE_SIZE,
+                                    Global::TILE_SIZE,
+                                    false)
           end
         end
       end
@@ -32,12 +40,9 @@ class Stage
   def draw
     @map.foreach do |i, j, x, y|
       if @tiles[i][j]
-        @tiles[i][j].draw
+        @wall.draw x, y, 0
       else
-        Global.window.draw_quad x, y, 0xffabcdef,
-                                x + Global::TILE_SIZE, y, 0xffabcdef,
-                                x, y + Global::TILE_SIZE, 0xffabcdef,
-                                x + Global::TILE_SIZE, y + Global::TILE_SIZE, 0xffabcdef, 0
+        @floor.draw x, y, 0
       end
     end
   end

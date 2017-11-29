@@ -38,5 +38,12 @@ class Player < GameObject
     end
 
     move(speed, Global.stage.obstacles, [], true)
+
+    Global.stage.map.set_camera(@x - Global::SCREEN_WIDTH / 2 + @w / 2,
+                                @y - Global::SCREEN_HEIGHT / 2 + @h / 2)
+  end
+
+  def draw
+    super Global.stage.map
   end
 end

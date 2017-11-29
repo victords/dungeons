@@ -9,7 +9,7 @@ class Game < GameWindow
     @player = Player.new
     @stage = Stage.new(1)
 
-    Global.initialize(self, @stage)
+    Global.initialize(self, @stage, @player)
   end
 
   def update
