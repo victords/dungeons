@@ -1,13 +1,15 @@
 require_relative 'player'
+require_relative 'stage'
 
 class Game < GameWindow
   def initialize
     super Global::SCREEN_WIDTH, Global::SCREEN_HEIGHT, false
 
     Res.prefix = File.expand_path(__FILE__).split('/')[0..-3].join('/') + '/data'
-    G.gravity = Vector.new(0, 0)
-    @block = GameObject.new(245, 137, 32, 32, :wall)
-    @player = Player.new(@block)
+    @player = Player.new
+    @stage = Stage.new(1)
+
+    Global.initialize(self, @stage)
   end
 
   def update
@@ -16,8 +18,8 @@ class Game < GameWindow
   end
 
   def draw
+    @stage.draw
     @player.draw
-    @block.draw
   end
 end
 

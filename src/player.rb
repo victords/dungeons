@@ -5,9 +5,8 @@ class Player < GameObject
   SPEED = 3
   D_SPEED = SPEED * 2**0.5 * 0.5
 
-  def initialize(block)
+  def initialize
     super 0, 0, 32, 32, :face, nil, 2, 2
-    @obst = [block]
   end
 
   def update
@@ -38,6 +37,6 @@ class Player < GameObject
       speed.x += SPEED
     end
 
-    move(speed, @obst, [], true)
+    move(speed, Global.stage.obstacles, [], true)
   end
 end
