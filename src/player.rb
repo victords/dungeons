@@ -43,6 +43,10 @@ class Player < GameObject
                                 @y - Global::SCREEN_HEIGHT / 2 + @h / 2)
   end
 
+  def start
+    @x = @y = 0
+  end
+
   def draw
     super Global.stage.map
   end

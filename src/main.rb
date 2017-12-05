@@ -7,7 +7,7 @@ class Game < GameWindow
 
     Res.prefix = File.expand_path(__FILE__).split('/')[0..-3].join('/') + '/data'
     @player = Player.new
-    @stage = Stage.new(1)
+    @stage = Stage.new(@stage_index = 1)
 
     Global.initialize(self, @stage, @player)
   end
@@ -15,6 +15,12 @@ class Game < GameWindow
   def update
     KB.update
     @player.update
+    @stage.update
+    if @stage.completed
+      @stage_index += 1
+      Global.stage = @stage = Stage.new(@stage_index)
+      @player.start
+    end
   end
 
   def draw
