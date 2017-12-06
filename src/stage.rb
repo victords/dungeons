@@ -1,4 +1,4 @@
-require_relative 'global'
+require_relative 'enemy'
 
 class Stage
   attr_reader :width, :height, :obstacles, :map, :completed
@@ -19,21 +19,22 @@ class Stage
         Block.new(-1, 0, 1, @height * Global::TILE_SIZE, false),
         Block.new(@width * Global::TILE_SIZE, 0, 1, @height * Global::TILE_SIZE, false)
       ]
+      @enemies = []
 
-      lines.each_with_index do |line, y|
-        (0...line.length).each do |x|
-          if line[x] == '#'
-            @tiles[x][y] = true
-            @obstacles << Block.new(x * Global::TILE_SIZE,
-                                    y * Global::TILE_SIZE,
-                                    Global::TILE_SIZE,
-                                    Global::TILE_SIZE,
-                                    false)
-          elsif line[x] == 'G'
-            @goal = Sprite.new(x * Global::TILE_SIZE, y * Global::TILE_SIZE, :goal)
-            @goal_rect = Rectangle.new(@goal.x + Global::TILE_SIZE / 2 - 4,
-                                       @goal.y + Global::TILE_SIZE / 2 - 4,
-                                       8, 8)
+      lines.each_with_index do |line, j|
+        (0...line.length).each do |i|
+          if line[i] != '_'
+            x = i * Global::TILE_SIZE
+            y = j * Global::TILE_SIZE
+          end
+          if line[i] == '#'
+            @tiles[i][j] = true
+            @obstacles << Block.new(x, y, Global::TILE_SIZE, Global::TILE_SIZE, false)
+          elsif line[i] == 'G'
+            @goal = Sprite.new(x, y, :goal)
+            @goal_rect = Rectangle.new(x + Global::TILE_SIZE / 2 - 4, y + Global::TILE_SIZE / 2 - 4, 8, 8)
+          elsif line[i] == '!'
+            @enemies << Enemy.new(1, x, y)
           end
         end
       end
@@ -46,6 +47,7 @@ class Stage
     if Global.player.bounds.intersect?(@goal_rect)
       @completed = true
     end
+    @enemies.each(&:update)
   end
 
   def draw
@@ -57,5 +59,6 @@ class Stage
       end
     end
     @goal.draw(@map)
+    @enemies.each { |e| e.draw(@map) }
   end
 end
