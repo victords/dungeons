@@ -1,6 +1,7 @@
 require_relative 'player'
 require_relative 'stage'
 
+# Represents the game window and controls the game state
 class Game < GameWindow
   def initialize
     super Global::SCREEN_WIDTH, Global::SCREEN_HEIGHT, false
@@ -16,11 +17,10 @@ class Game < GameWindow
     KB.update
     @player.update
     @stage.update
-    if @stage.completed
-      @stage_index += 1
-      Global.stage = @stage = Stage.new(@stage_index)
-      @player.start
-    end
+    return unless @stage.completed
+    @stage_index += 1
+    Global.stage = @stage = Stage.new(@stage_index)
+    @player.start
   end
 
   def draw
