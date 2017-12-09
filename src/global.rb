@@ -9,13 +9,13 @@ class Global
   T_S = 32
 
   class << self
-    attr_reader :window, :player
-    attr_accessor :stage
+    attr_reader :window, :font
+    attr_accessor :stage, :player
 
-    def initialize(window, stage, player)
+    def initialize(window)
       @window = window
-      @stage = stage
-      @player = player
+
+      @font = Res.font :dejavu, 16
     end
   end
 end
