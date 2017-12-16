@@ -3,17 +3,26 @@ require_relative 'global'
 # The game's start menu
 class Menu
   def initialize
-    @play_button = Button.new(x: 350, y: 260, img: :button, text: 'Play', font: Global.font) do
-      @state = :play
-    end
+    @buttons = [
+      Button.new(x: 350, y: 260, img: :button, text: 'Play', font: Global.font) do
+        @state = :play
+      end,
+      Button.new(x: 350, y: 310, img: :button, text: 'Quit', font: Global.font) do
+        exit
+      end
+    ]
+  end
+
+  def reset
+    @state = :normal
   end
 
   def update
-    @play_button.update
-    return @state
+    @buttons.each(&:update)
+    @state
   end
 
   def draw
-    @play_button.draw
+    @buttons.each(&:draw)
   end
 end

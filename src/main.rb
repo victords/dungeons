@@ -9,7 +9,7 @@ class Game < GameWindow
 
     Res.prefix = File.expand_path(__FILE__).split('/')[0..-3].join('/') + '/data'
 
-    Global.initialize(self)
+    Global.initialize
 
     @menu = Menu.new
     @state = :menu
@@ -26,15 +26,18 @@ class Game < GameWindow
       if @menu.update == :play
         @state = :play
         Global.player = Player.new
-        Global.stage = Stage.new(@stage_index = 1)
+        Global.stage = Stage.new(Global.cur_level)
       end
     else
       Global.player.update
       Global.stage.update
-      return unless Global.stage.completed
-      @stage_index += 1
-      Global.stage = Stage.new(@stage_index)
-      Global.player.start
+      if Global.stage.completed
+        Global.stage = Stage.new(Global.cur_level += 1)
+        Global.player.start
+      elsif Global.player.dead
+        @menu.reset
+        @state = :menu
+      end
     end
   end
 
@@ -49,3 +52,4 @@ class Game < GameWindow
 end
 
 Game.new.show
+Global.save_progress

@@ -5,6 +5,8 @@ class Player < GameObject
   SPEED = 3
   D_SPEED = SPEED * 2**0.5 * 0.5
 
+  attr_accessor :dead
+
   def initialize
     super 0, 0, 32, 32, :face, nil, 2, 2
   end
@@ -45,6 +47,7 @@ class Player < GameObject
 
   def start
     @x = @y = 0
+    @dead = false
   end
 
   def draw
