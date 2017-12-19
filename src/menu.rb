@@ -4,10 +4,10 @@ require_relative 'global'
 class Menu
   def initialize
     @buttons = [
-      Button.new(x: 350, y: 260, img: :button, text: 'Play', font: Global.font) do
+      Btn.new(x: 350, y: 260, img: :button, text: 'Play', font: Global.font) do
         @state = :play
       end,
-      Button.new(x: 350, y: 310, img: :button, text: 'Quit', font: Global.font) do
+      Btn.new(x: 350, y: 310, img: :button, text: 'Quit', font: Global.font) do
         exit
       end
     ]

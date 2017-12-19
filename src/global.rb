@@ -2,7 +2,10 @@ require 'minigl'
 
 include MiniGL
 
-# Stores global constants and referencess
+Vec = MiniGL::Vector
+Btn = MiniGL::Button
+
+# Stores global constants and references
 class Global
   SCREEN_WIDTH = 800
   SCREEN_HEIGHT = 600

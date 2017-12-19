@@ -12,7 +12,7 @@ class Player < GameObject
   end
 
   def update
-    speed = Vector.new(0, 0)
+    speed = Vec.new(0, 0)
     if KB.key_down? Gosu::KbUp
       if KB.key_down? Gosu::KbLeft
         speed.x -= D_SPEED
