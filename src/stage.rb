@@ -1,57 +1,57 @@
 require_relative 'enemy'
 require_relative 'door'
 
-# Represents the stage
-class Stage
-  attr_reader :width, :height, :obstacles, :map, :completed
+# Represents a stage section
+class Section
+  attr_reader :width, :height, :obstacles, :map, :doors
 
-  def initialize(number)
+  def initialize(content)
     @wall = Res.img :wall
     @floor = Res.img :floor
 
-    File.open("#{Res.prefix}/stage/#{number}") do |file|
-      lines = file.readlines.map(&:strip)
+    lines = content.split("\n")
 
-      @width = lines[0].length
-      @height = lines.length
-      @tiles = Array.new(@width) { Array.new(@height) }
-      @obstacles = [
-        Block.new(0, -1, @width * Global::T_S, 1, false),
-        Block.new(0, @height * Global::T_S, @width * Global::T_S, 1, false),
-        Block.new(-1, 0, 1, @height * Global::T_S, false),
-        Block.new(@width * Global::T_S, 0, 1, @height * Global::T_S, false)
-      ]
-      @enemies = []
-      @objects = []
+    @width = lines[0].length
+    @height = lines.length
+    @tiles = Array.new(@width) { Array.new(@height) }
+    @obstacles = [
+      Block.new(0, -1, @width * Global::T_S, 1, false),
+      Block.new(0, @height * Global::T_S, @width * Global::T_S, 1, false),
+      Block.new(-1, 0, 1, @height * Global::T_S, false),
+      Block.new(@width * Global::T_S, 0, 1, @height * Global::T_S, false)
+    ]
+    @enemies = []
+    @objects = []
+    @doors = {}
 
-      lines.each_with_index do |line, j|
-        (0...line.length).each do |i|
-          next if line[i] == '_'
-          cell = line[i]
-          x = i * Global::T_S
-          y = j * Global::T_S
-          if cell == '#'
-            @tiles[i][j] = true
-            @obstacles << Block.new(x, y, Global::T_S, Global::T_S, false)
-          elsif cell == 'G'
-            @goal = Sprite.new(x, y, :goal)
-            @goal_rect = Rectangle.new(x + Global::T_S / 2 - 4, y + Global::T_S / 2 - 4, 8, 8)
-          elsif cell == 'D'
-            @objects << Door.new(x, y)
-          elsif cell.to_i > 0
-            @enemies << Enemy.new(cell.to_i, x, y)
-          end
+    lines.each_with_index do |line, j|
+      (0...line.length).each do |i|
+        next if line[i] == '_'
+        cell = line[i]
+        x = i * Global::T_S
+        y = j * Global::T_S
+        if cell == '#'
+          @tiles[i][j] = true
+          @obstacles << Block.new(x, y, Global::T_S, Global::T_S, false)
+        elsif cell == 'G'
+          @goal = Sprite.new(x, y, :goal)
+          @goal_rect = Rectangle.new(x + Global::T_S / 2 - 4, y + Global::T_S / 2 - 4, 8, 8)
+        elsif /[a-z]/ =~ cell
+          @objects << Door.new(cell, x, y)
+          @doors[cell] = [x, y + Global::T_S]
+        elsif cell.to_i > 0
+          @enemies << Enemy.new(cell.to_i, x, y)
         end
       end
-
-      @map = Map.new(Global::T_S, Global::T_S, @width, @height)
     end
+
+    @map = Map.new(Global::T_S, Global::T_S, @width, @height)
   end
 
   def update
-    @completed = true if Global.player.bounds.intersect?(@goal_rect)
     @enemies.each(&:update)
     @objects.each(&:update)
+    @goal && Global.player.bounds.intersect?(@goal_rect)
   end
 
   def draw
@@ -62,8 +62,47 @@ class Stage
         @floor.draw x, y, 0
       end
     end
-    @goal.draw(@map)
+    @goal.draw(@map) if @goal
     @enemies.each { |e| e.draw(@map) }
     @objects.each { |o| o.draw(@map) }
+  end
+end
+
+# Controls the sections of a stage
+class Stage
+  def initialize(number)
+    File.open("#{Res.prefix}/stage/#{number}") do |file|
+      @sections = []
+      contents = file.read.split("\n===\n")
+      contents.each do |content|
+        @sections << Section.new(content)
+      end
+      @current_section = @sections[0]
+    end
+  end
+
+  def transport(door_id)
+    @sections.each do |section|
+      next if section == @current_section
+      door = section.doors[door_id]
+      if door
+        @current_section = section
+        Global.player.x = door[0]
+        Global.player.y = door[1]
+        break
+      end
+    end
+  end
+
+  def method_missing(name)
+    if @current_section.respond_to?(name)
+      @current_section.send(name)
+    else
+      super
+    end
+  end
+
+  def respond_to_missing?(method_name, _ = false)
+    %w(width height obstacles map).include? method_name
   end
 end

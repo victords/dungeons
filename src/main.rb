@@ -30,8 +30,7 @@ class Game < GameWindow
       end
     else
       Global.player.update
-      Global.stage.update
-      if Global.stage.completed
+      if Global.stage.update
         Global.stage = Stage.new(Global.cur_level += 1)
         Global.player.start
       elsif Global.player.dead
