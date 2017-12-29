@@ -28,6 +28,9 @@ class Game < GameWindow
         Global.player = Player.new
         Global.stage = Stage.new(Global.cur_level)
       end
+    elsif KB.key_pressed?(Gosu::KbEscape)
+      @menu.reset
+      @state = :menu
     else
       Global.player.update
       if Global.stage.update

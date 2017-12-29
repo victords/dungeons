@@ -10,13 +10,15 @@ class Global
   SCREEN_WIDTH = 800
   SCREEN_HEIGHT = 600
   T_S = 32
+  BTN_W = 100
+  BTN_H = 30
 
   class << self
     attr_reader :font
     attr_accessor :stage, :player, :cur_level
 
     def initialize
-      @font = Res.font :dejavu, 16
+      @font = Res.font :dejavu, 20
 
       save_dir = "#{File.expand_path('~')}/.dungeons"
       Dir.mkdir(save_dir) unless File.exist?(save_dir)
