@@ -8,6 +8,7 @@ class Door < GameObject
     super(x + 8, y + 8, Global::T_S - 16, Global::T_S - 16, :door, Vec.new(-8, -8))
     @id = id
     @locked = locked
+    @lock = Sprite.new(x + 5, y + 14, :lock, 1, 1) if @locked
     @dead = false
   end
 
@@ -26,6 +27,6 @@ class Door < GameObject
 
   def draw(map)
     super map
-    G.window.draw_line @x, @y, 0xff0000ff, @x + 2, @y, 0xff0000ff, 1 if @locked
+    @lock.draw(map) if @locked
   end
 end
