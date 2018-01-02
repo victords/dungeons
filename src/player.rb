@@ -5,10 +5,11 @@ class Player < GameObject
   SPEED = 3
   D_SPEED = SPEED * 2**0.5 * 0.5
 
-  attr_accessor :dead
+  attr_accessor :dead, :key_count
 
   def initialize
     super 0, 0, 32, 32, :face, nil, 2, 2
+    @key_count = 0
   end
 
   def update
@@ -46,11 +47,12 @@ class Player < GameObject
   end
 
   def start
-    @x = @y = 0
+    @x = @y = @key_count = 0
     @dead = false
   end
 
   def draw
     super Global.stage.map
+    Global.font.draw "#{@key_count}", 780, 5, 1, 1, 1, 0xff000000
   end
 end

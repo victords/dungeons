@@ -1,5 +1,6 @@
 require_relative 'enemy'
 require_relative 'door'
+require_relative 'key'
 
 # Represents a stage section
 class Section
@@ -34,12 +35,14 @@ class Section
         if cell == '#' # wall
           @tiles[i][j] = true
           @obstacles << Block.new(x, y, Global::T_S, Global::T_S, false)
-        elsif cell == 'G' # goal
+        elsif cell == '!' # goal
           @goal = Sprite.new(x, y, :goal)
           @goal_rect = Rectangle.new(x + Global::T_S / 2 - 4, y + Global::T_S / 2 - 4, 8, 8)
-        elsif /[a-z]/ =~ cell # door
-          @objects << Door.new(cell, x, y)
-          @doors[cell] = [x, y + Global::T_S]
+        elsif cell == '$' #key
+          @objects << Key.new(x, y)
+        elsif /[A-Za-z]/ =~ cell # door
+          @objects << Door.new(cell.downcase, cell < 'a', x, y)
+          @doors[cell.downcase] = [x, y + Global::T_S]
         elsif cell.to_i > 0 # enemy
           @enemies << Enemy.new(cell.to_i, x, y)
         end
@@ -51,7 +54,10 @@ class Section
 
   def update
     @enemies.each(&:update)
-    @objects.each(&:update)
+    @objects.each do |o|
+      o.update
+      @objects.delete o if o.dead
+    end
     @goal && Global.player.bounds.intersect?(@goal_rect)
   end
 
