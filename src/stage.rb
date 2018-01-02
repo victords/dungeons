@@ -6,10 +6,11 @@ class Section
   attr_reader :width, :height, :obstacles, :map, :doors
 
   def initialize(content)
-    @wall = Res.img :wall
-    @floor = Res.img :floor
-
     lines = content.split("\n")
+    scenery_type = lines[0].to_i
+    @floor = Res.img "floor#{scenery_type}"
+    @wall = Res.img "wall#{scenery_type}"
+    lines = lines[1..-1]
 
     @width = lines[0].length
     @height = lines.length
@@ -30,16 +31,16 @@ class Section
         cell = line[i]
         x = i * Global::T_S
         y = j * Global::T_S
-        if cell == '#'
+        if cell == '#' # wall
           @tiles[i][j] = true
           @obstacles << Block.new(x, y, Global::T_S, Global::T_S, false)
-        elsif cell == 'G'
+        elsif cell == 'G' # goal
           @goal = Sprite.new(x, y, :goal)
           @goal_rect = Rectangle.new(x + Global::T_S / 2 - 4, y + Global::T_S / 2 - 4, 8, 8)
-        elsif /[a-z]/ =~ cell
+        elsif /[a-z]/ =~ cell # door
           @objects << Door.new(cell, x, y)
           @doors[cell] = [x, y + Global::T_S]
-        elsif cell.to_i > 0
+        elsif cell.to_i > 0 # enemy
           @enemies << Enemy.new(cell.to_i, x, y)
         end
       end
