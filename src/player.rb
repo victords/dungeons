@@ -63,6 +63,11 @@ class Player < GameObject
     end
   end
 
+  def add_health(amount = 1)
+    @health += amount
+    @health = MAX_HEALTH if @health > MAX_HEALTH
+  end
+
   def start
     @x = @y = @invulnerable = @key_count = 0
     @health = 3

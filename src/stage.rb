@@ -1,6 +1,7 @@
 require_relative 'enemy'
 require_relative 'door'
 require_relative 'key'
+require_relative 'heart'
 
 # Represents a stage section
 class Section
@@ -38,7 +39,9 @@ class Section
         elsif cell == '!' # goal
           @goal = Sprite.new(x, y, :goal)
           @goal_rect = Rectangle.new(x + Global::T_S / 2 - 4, y + Global::T_S / 2 - 4, 8, 8)
-        elsif cell == '$' #key
+        elsif cell == '@' # heart
+          @objects << Heart.new(x, y)
+        elsif cell == '$' # key
           @objects << Key.new(x, y)
         elsif /[A-Za-z]/ =~ cell # door
           @objects << Door.new(cell.downcase, cell < 'a', x, y)
