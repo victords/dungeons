@@ -4,6 +4,7 @@ require_relative 'global'
 class Player < GameObject
   SPEED = 3
   D_SPEED = SPEED * 2**0.5 * 0.5
+  POWER_UP_MULT = 1.618
   MAX_HEALTH = 4
 
   attr_reader :dead
@@ -13,6 +14,7 @@ class Player < GameObject
     super 0, 0, 32, 32, :face, nil, 3, 2
     @health = 3
     @invulnerable = 0
+    @powered = 0
     @key_count = 0
   end
 
@@ -43,10 +45,12 @@ class Player < GameObject
     elsif KB.key_down? Gosu::KbRight
       speed.x += SPEED
     end
+    speed *= POWER_UP_MULT if @powered > 0
     move(speed, Global.stage.obstacles, [], true)
 
     @invulnerable -= 1 if @invulnerable > 0
-    @img_index = 4 - @health
+    @powered -= 1 if @powered > 0
+    @img_index = @powered > 0 ? 5 : 4 - @health
 
     Global.stage.map.set_camera(@x - Global::SCREEN_WIDTH / 2 + @w / 2,
                                 @y - Global::SCREEN_HEIGHT / 2 + @h / 2)
@@ -68,8 +72,12 @@ class Player < GameObject
     @health = MAX_HEALTH if @health > MAX_HEALTH
   end
 
+  def power_up
+    @powered = 600 # 600 frames = 10 seconds
+  end
+
   def start
-    @x = @y = @invulnerable = @key_count = 0
+    @x = @y = @invulnerable = @powered = @key_count = 0
     @health = 3
     @dead = false
   end

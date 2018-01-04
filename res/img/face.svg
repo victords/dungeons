@@ -29,8 +29,8 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="1"
-     inkscape:cx="48.73671"
-     inkscape:cy="36.766327"
+     inkscape:cx="29.434178"
+     inkscape:cy="29.441582"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="false"
@@ -103,61 +103,61 @@
     <circle
        style="fill:#ffff00;fill-opacity:1;stroke:#000000;stroke-width:0.99999994;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
        id="circle4179"
-       cx="80"
+       cx="48"
        cy="1036.3622"
        r="15.5" />
     <circle
        r="15.5"
        cy="1036.3622"
-       cx="48"
+       cx="80"
        id="circle4189"
        style="fill:#ffff00;fill-opacity:1;stroke:#000000;stroke-width:0.99999994;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
     <circle
        r="3.5"
        cy="1031.8622"
-       cx="41.5"
+       cx="73.5"
        id="circle4191"
        style="fill:#000000;fill-opacity:1;stroke:none;stroke-width:1;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
     <circle
        r="3.5"
        style="fill:#000000;fill-opacity:1;stroke:none;stroke-width:1;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
        id="circle4193"
-       cx="54.5"
+       cx="86.5"
        cy="1031.8622" />
     <path
        style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:round;stroke-opacity:1"
-       d="m 46.194792,1030.9662 -8.389584,-6.2512"
+       d="m 78.194792,1030.9662 -8.389584,-6.2512"
        id="path4218"
        inkscape:connector-curvature="0" />
     <path
        inkscape:connector-curvature="0"
        id="path4220"
-       d="m 49.805208,1030.9662 8.389584,-6.2512"
+       d="m 81.805208,1030.9662 8.389584,-6.2512"
        style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:round;stroke-opacity:1" />
     <path
        sodipodi:nodetypes="csc"
        inkscape:connector-curvature="0"
        id="path4222"
-       d="m 72.5,1046.3622 c 0,-4.1421 3.357864,-7.5 7.5,-7.5 4.142136,0 7.5,3.3579 7.5,7.5"
+       d="m 40.5,1046.3622 c 0,-4.1421 3.357864,-7.5 7.5,-7.5 4.142136,0 7.5,3.3579 7.5,7.5"
        style="fill:none;fill-opacity:1;stroke:#000000;stroke-width:1;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
     <path
        style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:1px;stroke-linecap:round;stroke-linejoin:miter;stroke-opacity:1"
-       d="m 70.505015,1034.8571 5.989967,-5.9903"
+       d="m 38.505015,1034.8571 5.989967,-5.9903"
        id="path4224"
        inkscape:connector-curvature="0" />
     <path
        inkscape:connector-curvature="0"
        id="path4226"
-       d="m 76.494982,1034.8571 -5.989967,-5.9903"
+       d="m 44.494982,1034.8571 -5.989967,-5.9903"
        style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:1px;stroke-linecap:round;stroke-linejoin:miter;stroke-opacity:1" />
     <path
        inkscape:connector-curvature="0"
        id="path4228"
-       d="m 83.505015,1034.8571 5.989967,-5.9903"
+       d="m 51.505015,1034.8571 5.989967,-5.9903"
        style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:1px;stroke-linecap:round;stroke-linejoin:miter;stroke-opacity:1" />
     <path
        style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:1px;stroke-linecap:round;stroke-linejoin:miter;stroke-opacity:1"
-       d="m 89.494982,1034.8571 -5.989967,-5.9903"
+       d="m 57.494982,1034.8571 -5.989967,-5.9903"
        id="path4230"
        inkscape:connector-curvature="0" />
     <path
@@ -222,7 +222,7 @@
        sodipodi:nodetypes="cscc"
        inkscape:connector-curvature="0"
        id="path4245"
-       d="m 55.499999,1040.3622 c 0,4.1421 -3.357864,7.5 -7.5,7.5 -4.142136,0 -7.5,-3.3579 -7.5,-7.5 z"
+       d="m 87.499999,1040.3622 c 0,4.1421 -3.357864,7.5 -7.5,7.5 -4.142136,0 -7.5,-3.3579 -7.5,-7.5 z"
        style="fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:1;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
   </g>
 </svg>
