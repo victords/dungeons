@@ -69,15 +69,11 @@ class Section
 
   def draw
     @map.foreach do |i, j, x, y|
-      if @tiles[i][j]
-        @wall.draw x, y, 0
-      else
-        @floor.draw x, y, 0
-      end
+      (@tiles[i][j] ? @wall : @floor).draw x, y, 0
     end
     @goal.draw(@map) if @goal
-    @enemies.each { |e| e.draw(@map) }
     @objects.each { |o| o.draw(@map) }
+    @enemies.each { |e| e.draw(@map) }
   end
 end
 
