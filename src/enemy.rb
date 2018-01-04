@@ -14,7 +14,7 @@ class Enemy < GameObject
 
   def update
     cycle(@points, SPEED)
-    Global.player.dead = true if Global.player.bounds.intersect?(bounds)
+    Global.player.hit if Global.player.bounds.intersect?(bounds)
   end
 
   def route(number)
