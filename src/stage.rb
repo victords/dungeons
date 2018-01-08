@@ -3,6 +3,7 @@ require_relative 'door'
 require_relative 'key'
 require_relative 'heart'
 require_relative 'star'
+require_relative 'wind'
 
 # Represents a stage section
 class Section
@@ -49,6 +50,8 @@ class Section
         elsif /[A-Za-z]/ =~ cell # door
           @objects << Door.new(cell.downcase, cell < 'a', x, y)
           @doors[cell.downcase] = [x, y + Global::T_S]
+        elsif /[\/\\=-]/ =~ cell # wind
+          @objects << Wind.new(cell == '/' ? :up : cell == '\\' ? :down : cell == '=' ? :left : :right, x, y)
         elsif cell.to_i > 0 # enemy
           @enemies << Enemy.new(cell.to_i, x, y)
         end

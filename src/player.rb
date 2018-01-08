@@ -7,7 +7,7 @@ class Player < GameObject
   POWER_UP_MULT = 1.618
   MAX_HEALTH = 4
 
-  attr_reader :dead
+  attr_reader :dead, :extra_speed
   attr_accessor :key_count
 
   def initialize
@@ -16,6 +16,7 @@ class Player < GameObject
     @invulnerable = 0
     @powered = 0
     @key_count = 0
+    @extra_speed = Vec.new(0, 0)
   end
 
   def update
@@ -46,6 +47,8 @@ class Player < GameObject
       speed.x += SPEED
     end
     speed *= POWER_UP_MULT if @powered > 0
+    speed += @extra_speed
+    @extra_speed.x = @extra_speed.y = 0
     move(speed, Global.stage.obstacles, [], true)
 
     @invulnerable -= 1 if @invulnerable > 0
@@ -79,6 +82,7 @@ class Player < GameObject
   def start
     @x = @y = @invulnerable = @powered = @key_count = 0
     @health = 3
+    @extra_speed = Vec.new(0, 0)
     @dead = false
   end
 
