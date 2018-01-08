@@ -37,8 +37,10 @@ class Game < GameWindow
         Global.stage = Stage.new(Global.cur_level += 1)
         Global.player.start
       elsif Global.player.dead
-        @menu.reset
-        @state = :menu
+        if KB.key_pressed?(Gosu::KbReturn)
+          @menu.reset
+          @state = :menu
+        end
       end
     end
   end

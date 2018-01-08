@@ -17,6 +17,9 @@ class Player < GameObject
     @powered = 0
     @key_count = 0
     @extra_speed = Vec.new(0, 0)
+    @text_helper = TextHelper.new(Global.font)
+    @heart_icon = Res.imgs(:heart, 2, 2)[0]
+    @key_icon = Res.img(:key)
   end
 
   def update
@@ -88,7 +91,24 @@ class Player < GameObject
 
   def draw
     super Global.stage.map
-    Global.font.draw @key_count.to_s, 780, 5, 1, 1, 1, 0xff000000
-    Global.font.draw @health.to_s, 780, 35, 1, 1, 1, 0xff000000
+
+    if @dead
+      # dead message
+      G.window.draw_quad(0, 0, 0x80000000,
+                         Global::SCREEN_WIDTH, 0, 0x80000000,
+                         0, Global::SCREEN_HEIGHT, 0x80000000,
+                         Global::SCREEN_WIDTH, Global::SCREEN_HEIGHT, 0x80000000, 1)
+      @text_helper.write_line(text: 'You are dead', x: Global::SCREEN_WIDTH / 2, y: Global::SCREEN_HEIGHT / 2 - 12, mode: :center)
+    else
+      # panel
+      G.window.draw_quad(Global::SCREEN_WIDTH - 70, 10, 0x80ffffff,
+                         Global::SCREEN_WIDTH - 10, 10, 0x80ffffff,
+                         Global::SCREEN_WIDTH - 70, 60, 0x80ffffff,
+                         Global::SCREEN_WIDTH - 10, 60, 0x80ffffff, 1)
+      @heart_icon.draw(Global::SCREEN_WIDTH - 65, 14, 1)
+      @text_helper.write_line(text: @health.to_s, x: Global::SCREEN_WIDTH - 15, y: 10, mode: :right, color: 0xffffff, effect: :border, z_index: 1)
+      @key_icon.draw(Global::SCREEN_WIDTH - 63, 36, 1)
+      @text_helper.write_line(text: @key_count.to_s, x: Global::SCREEN_WIDTH - 15, y: 35, mode: :right, color: 0xffffff, effect: :border, z_index: 1)
+    end
   end
 end

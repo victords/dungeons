@@ -18,7 +18,7 @@ class Global
     attr_accessor :stage, :player, :cur_level
 
     def initialize
-      @font = Res.font :dejavu, 20
+      @font = Res.font :dejavu, 24
 
       save_dir = "#{File.expand_path('~')}/.dungeons"
       Dir.mkdir(save_dir) unless File.exist?(save_dir)
