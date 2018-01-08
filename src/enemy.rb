@@ -4,6 +4,8 @@ require_relative 'global'
 class Enemy < GameObject
   SPEED = 3
 
+  attr_reader :dead
+
   def initialize(number, x, y)
     super x, y, Global::T_S, Global::T_S, :enemy, Vec.new(0, 0), 2, 2
     points = route(number).map do |a|

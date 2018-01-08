@@ -25,7 +25,6 @@ class Section
       Block.new(-1, 0, 1, @height * Global::T_S, false),
       Block.new(@width * Global::T_S, 0, 1, @height * Global::T_S, false)
     ]
-    @enemies = []
     @objects = []
     @doors = {}
 
@@ -53,7 +52,7 @@ class Section
         elsif /[\/\\=-]/ =~ cell # wind
           @objects << Wind.new(cell == '/' ? :up : cell == '\\' ? :down : cell == '=' ? :left : :right, x, y)
         elsif cell.to_i > 0 # enemy
-          @enemies << Enemy.new(cell.to_i, x, y)
+          @objects << Enemy.new(cell.to_i, x, y)
         end
       end
     end
@@ -62,7 +61,7 @@ class Section
   end
 
   def update
-    @enemies.each(&:update)
+    Wind.affecting_player = false
     @objects.each do |o|
       o.update
       @objects.delete o if o.dead
@@ -76,7 +75,6 @@ class Section
     end
     @goal.draw(@map) if @goal
     @objects.each { |o| o.draw(@map) }
-    @enemies.each { |e| e.draw(@map) }
   end
 end
 
